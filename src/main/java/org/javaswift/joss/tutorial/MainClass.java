@@ -30,18 +30,18 @@ public class MainClass {
                 .setUsername(credentials.getString("username"))
                 .setPassword(credentials.getString("password"))
                 .setAuthUrl(credentials.getString("auth_url"))
-                .setMock(true)
+                .setMock(false)
                 .createAccount();
 
         // Add content
-        Container myContainer = account.getContainer("MyContainer");
+        Container myContainer = account.getContainer("1stContainer");
         if (!myContainer.exists()) {
             myContainer.create();
             myContainer.makePublic();
         }
 
-        StoredObject someFile = myContainer.getObject("cloud-computing.jpg");
-        someFile.uploadObject(new File("src/main/resources/Cloud-Computing.jpg"));
+        StoredObject someFile = myContainer.getObject("test.txt");
+        someFile.uploadObject(new File("s/home/rizwan/Downloads/newfile.txt"));
         System.out.println(someFile.getPublicURL());
 
         Map<String, Object> metadata = new HashMap<String, Object>();
