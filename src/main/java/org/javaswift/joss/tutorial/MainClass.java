@@ -1,20 +1,16 @@
 package org.javaswift.joss.tutorial;
 
+import org.javaswift.joss.client.factory.AccountConfig;
 import org.javaswift.joss.client.factory.AccountFactory;
+import org.javaswift.joss.client.factory.AuthenticationMethod;
 import org.javaswift.joss.model.Account;
 import org.javaswift.joss.model.Container;
 import org.javaswift.joss.model.StoredObject;
-
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-/**
- * Simple class to test Joss functionality with.
- *
- * @author <a href="mailto:oscar.westra@42.nl">Oscar Westra van Holthe - Kind</a>
- */
 public class MainClass {
 
     public static void main(String... args) {
@@ -26,11 +22,10 @@ public class MainClass {
         ResourceBundle credentials = ResourceBundle.getBundle("credentials");
 
         Account account = new AccountFactory()
-                .setTenantName(credentials.getString("tenant"))
                 .setUsername(credentials.getString("username"))
                 .setPassword(credentials.getString("password"))
                 .setAuthUrl(credentials.getString("auth_url"))
-                .setMock(false)
+                .setAuthenticationMethod(AuthenticationMethod.BASIC)
                 .createAccount();
 
         // Add content
@@ -41,8 +36,9 @@ public class MainClass {
         }
 
         StoredObject someFile = myContainer.getObject("test.txt");
-        someFile.uploadObject(new File("s/home/rizwan/Downloads/newfile.txt"));
+        someFile.uploadObject(new File("/home/rizwan/Downloads/newfile.txt"));
         System.out.println(someFile.getPublicURL());
+
 
         Map<String, Object> metadata = new HashMap<String, Object>();
         metadata.put("Information", "Almost, but not quite, entirely unlike tea.");
@@ -91,5 +87,10 @@ public class MainClass {
                 System.out.printf("  %s: %s%n", entry.getKey(), entry.getValue());
             }
         }
+
+
+
+
     }
+
 }
